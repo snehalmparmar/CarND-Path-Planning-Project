@@ -1,77 +1,42 @@
 # CarND-Path-Planning-Project
-Self-Driving Car Engineer Nanodegree Program
-   
-### Simulator.
-You can download the Term3 Simulator which contains the Path Planning Project from the [releases tab (https://github.com/udacity/self-driving-car-sim/releases/tag/T3_v1.2).  
 
-To run the simulator on Mac/Linux, first make the binary file executable with the following command:
-```shell
-sudo chmod u+x {simulator_file_name}
-```
+> Path Planning Project for Self-Driving Car ND
 
-### Goals
-In this project your goal is to safely navigate around a virtual highway with other traffic that is driving +-10 MPH of the 50 MPH speed limit. You will be provided the car's localization and sensor fusion data, there is also a sparse map list of waypoints around the highway. The car should try to go as close as possible to the 50 MPH speed limit, which means passing slower traffic when possible, note that other cars will try to change lanes too. The car should avoid hitting other cars at all cost as well as driving inside of the marked road lanes at all times, unless going from one lane to another. The car should be able to make one complete loop around the 6946m highway. Since the car is trying to go 50 MPH, it should take a little over 5 minutes to complete 1 loop. Also the car should not experience total acceleration over 10 m/s^2 and jerk that is greater than 10 m/s^3.
+[![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
-#### The map of the highway is in data/highway_map.txt
-Each waypoint in the list contains  [x,y,s,dx,dy] values. x and y are the waypoint's map coordinate position, the s value is the distance along the road to get to that waypoint in meters, the dx and dy values define the unit normal vector pointing outward of the highway loop.
+![Path Planning](https://user-images.githubusercontent.com/4352286/44061856-0c255b1c-9f28-11e8-9b5a-0857b05d6da3.png)
 
-The highway's waypoints loop around so the frenet s value, distance along the road, goes from 0 to 6945.554.
+![PathPlanningOutputVideo](https://github.com/snehalmparmar/CarND-Path-Planning-Project/blob/master/src/video_output/2019-12-28-21-33-56.gif)
 
-## Basic Build Instructions
+The goal of this project is to design a path planner that is able to create smooth, safe paths for the car to follow along a 3 lanes highway with traffic. A successful path planner will be able to keep inside its lane, avoid hitting other cars, and pass slower moving traffic all by using localization, sensor fusion, and map data.
 
-1. Clone this repo.
-2. Make a build directory: `mkdir build && cd build`
-3. Compile: `cmake .. && make`
-4. Run it: `./path_planning`.
+In other words, the car :
 
-Here is the data provided from the Simulator to the C++ Program
+- **Should be able to drive at least 4.32 miles without incident**. Incidents include exceeding acceleration/jerk/speed, collision, and driving outside of the lanes.
+- **Should be able to drive according to the speed limit (50 mph)**. The car shouldn't drive faster than the speed limit. Also the car shouldn't drive much slower than speed limit unless obstructed by traffic.
+- **Does not exceed max Acceleration (10 m/s^2) and Jerk (10 m/s^3)**.
+- **Must not come into contact with any of the other cars on the road**.
+- **Stays in its lane**, except for the time between changing lanes. The car doesn't spend more than a 3 seconds length outside the lanes during changing lanes, and every other time the car stays inside one of the 3 lanes on the right hand side of the road.
+- **Should be able to smoothly change lanes** when it makes sense to do so, such as when behind a slower moving car and an adjacent lane is clear of other traffic.
 
-#### Main car's localization Data (No Noise)
+## Overview
+Starting to work on this project consists of the following steps:
 
-["x"] The car's x position in map coordinates
-
-["y"] The car's y position in map coordinates
-
-["s"] The car's s position in frenet coordinates
-
-["d"] The car's d position in frenet coordinates
-
-["yaw"] The car's yaw angle in the map
-
-["speed"] The car's speed in MPH
-
-#### Previous path data given to the Planner
-
-//Note: Return the previous list but with processed points removed, can be a nice tool to show how far along
-the path has processed since last time. 
-
-["previous_path_x"] The previous list of x points previously given to the simulator
-
-["previous_path_y"] The previous list of y points previously given to the simulator
-
-#### Previous path's end s and d values 
-
-["end_path_s"] The previous list's last point's frenet s value
-
-["end_path_d"] The previous list's last point's frenet d value
-
-#### Sensor Fusion Data, a list of all other car's attributes on the same side of the road. (No Noise)
-
-["sensor_fusion"] A 2d vector of cars and then that car's [car's unique ID, car's x position in map coordinates, car's y position in map coordinates, car's x velocity in m/s, car's y velocity in m/s, car's s position in frenet coordinates, car's d position in frenet coordinates. 
-
-## Details
-
-1. The car uses a perfect controller and will visit every (x,y) point it recieves in the list every .02 seconds. The units for the (x,y) points are in meters and the spacing of the points determines the speed of the car. The vector going from a point to the next point in the list dictates the angle of the car. Acceleration both in the tangential and normal directions is measured along with the jerk, the rate of change of total Acceleration. The (x,y) point paths that the planner recieves should not have a total acceleration that goes over 10 m/s^2, also the jerk should not go over 50 m/s^3. (NOTE: As this is BETA, these requirements might change. Also currently jerk is over a .02 second interval, it would probably be better to average total acceleration over 1 second and measure jerk from that.
-
-2. There will be some latency between the simulator running and the path planner returning a path, with optimized code usually its not very long maybe just 1-3 time steps. During this delay the simulator will continue using points that it was last given, because of this its a good idea to store the last points you have used so you can have a smooth transition. previous_path_x, and previous_path_y can be helpful for this transition since they show the last points given to the simulator controller with the processed points already removed. You would either return a path that extends this previous path or make sure to create a new path that has a smooth transition with this last path.
-
-## Tips
-
-A really helpful resource for doing this project and creating smooth trajectories was using http://kluge.in-chemnitz.de/opensource/spline/, the spline function is in a single hearder file is really easy to use.
+1. Clone this repository
+2. Build & compile the main program 
+    - `mkdir build && cd build`
+    - `cmake .. && make`
+3. Launch `./path_planning`
+4. Launch the Udacity Term 3 simulator
+5. Enjoy!
 
 ---
 
-## Dependencies
+## Installation and Dependencies
+
+This project involves the Udacity Term 3 Simulator which can be downloaded [here](https://github.com/udacity/self-driving-car-sim/releases/tag/T3_v1.2).
+
+### Other Important Dependencies
 
 * cmake >= 3.5
   * All OSes: [click here for installation instructions](https://cmake.org/install/)
@@ -91,55 +56,51 @@ A really helpful resource for doing this project and creating smooth trajectorie
     cd uWebSockets
     git checkout e94b6e1
     ```
+    
+Once all the dependencies have been installed **clone** the project:
 
-## Editor Settings
+```sh
+git clone https://github.com/snehalmparmar/CarND-Path-Planning-Project.git
+```
 
-We've purposefully kept editor configuration files out of this repo in order to
-keep it as simple and environment agnostic as possible. However, we recommend
-using the following settings:
+and follow the steps 2 to 5 of the [Overview section](#overview) in order to build and run the main program.
 
-* indent using spaces
-* set tab width to 2 spaces (keeps the matrices in source code aligned)
+---
 
-## Code Style
+## Implementation
 
-Please (do your best to) stick to [Google's C++ style guide](https://google.github.io/styleguide/cppguide.html).
+My implementation is composed of two main parts which are the [prediction and behavior planning](https://github.com/snehalmparmar/CarND-Path-Planning-Project/blob/master/src/main.cpp#L404), and the [trajectory generation](https://github.com/snehalmparmar/CarND-Path-Planning-Project/blob/master/src/main.cppL407). See details below. 
 
-## Project Instructions and Rubric
+### 1. Prediction/Behavior
 
-Note: regardless of the changes you make, your project must be buildable using
-cmake and make!
+The prediction and behavior planning has been implemented under the `SimpleBehaviorPlanner` function starting [from line 179](https://github.com/snehalmparmar/CarND-Path-Planning-Project/blob/master/src/main.cpp#179). Based on the current state of the ego car and data from sensor fusion, the system decides what the car should do. By interpreting and understanding the surrounding environment, it finds the best possible behavior to adopt in order to drive safely and efficiently:
 
+- We first look at cars in front of us blocking the traffic ([see lines 188 to 224](https://github.com/snehalmparmar/CarND-Path-Planning-Project/blob/master/src/main.cpp#L188)). If it is the case, the car must consider to change lane ([see lines 224 to 227](https://github.com/snehalmparmar/CarND-Path-Planning-Project/blob/master/src/main.cpp#L224)). 
+- Otherwise, the car stays in the same lane and keep going by speeding up until we reach the speed limit (see [lines 228 to 231](https://github.com/snehalmparmar/CarND-Path-Planning-Project/blob/master/src/main.cpp#L228)).
 
-## Call for IDE Profiles Pull Requests
+Lane changing is handle by a distinct function named `TryChangingLane` [starting from line 152](https://github.com/snehalmparmar/CarND-Path-Planning-Project/blob/master/src/main.cpp#L152). This function is checking lanes for safety based on distance from cars and current speed [see line 55 to 78](https://github.com/snehalmparmar/CarND-Path-Planning-Project/blob/master/src/main.cpp#L55). If no other lane is safe to drive, the ego car stays on its lane and slow down to reach the front car speed. 
 
-Help your fellow students!
+### 2. Trajectory
 
-We decided to create Makefiles with cmake to keep this project as platform
-agnostic as possible. Similarly, we omitted IDE profiles in order to ensure
-that students don't feel pressured to use one IDE or another.
+Thanks to the previous step, we know how the car should behave. Whether it's has to change lane or drive straight, its path must be as smooth as possible. This is done under the `GenerateTrajectory` function starting [from line 234](https://github.com/snehalmparmar/CarND-Path-Planning-Project/blob/master/src/main.cpp#L234). 
 
-However! I'd love to help people get up and running with their IDEs of choice.
-If you've created a profile for an IDE that you think other students would
-appreciate, we'd love to have you add the requisite profile files and
-instructions to ide_profiles/. For example if you wanted to add a VS Code
-profile, you'd add:
+Trajectory calculation is initiated using the [spline library](http://kluge.in-chemnitz.de/opensource/spline/). To ease computation the map coordinates are transformed to local car coordinates ([see lines 276 to 281](https://github.com/snehalmparmar/CarND-Path-Planning-Project/blob/master/src/main.cpp#L276)). Points are then sampled from spline result and added to previous remaining path points in order to ensure more continuity to the trajectory.
 
-* /ide_profiles/vscode/.vscode
-* /ide_profiles/vscode/README.md
+---
 
-The README should explain what the profile does, how to take advantage of it,
-and how to install it.
+## Possible Improvements
 
-Frankly, I've never been involved in a project with multiple IDE profiles
-before. I believe the best way to handle this would be to keep them out of the
-repo root to avoid clutter. My expectation is that most profiles will include
-instructions to copy files to a new location to get picked up by the IDE, but
-that's just a guess.
+- Implement emergency braking
+- Enhance trajectory generation by:
+    1. Sampling a large number of end configurations near the desired position where we want the car to drive
+    2. Generate corresponding trajectories and discard all non-drivable ones
+    3. Pick the best trajectory based on jerk-minimizing cost function
 
-One last note here: regardless of the IDE used, every submitted project must
-still be compilable with cmake and make./
+---
 
-## How to write a README
-A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
+## Questions or Feedback
 
+> Contact me for any questions regarding this project.
+
+* Snehal Parmar
+* Email: [snehalparmar.nvs@gmail.com](mailto:snehalparmar.nvs@gmail.com)
