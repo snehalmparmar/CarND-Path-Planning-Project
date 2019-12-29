@@ -71,8 +71,8 @@ int NextWaypoint(double x, double y, double theta, const vector<double> &maps_x,
   double angle = fabs(theta-heading);
   angle = std::min(2*pi() - angle, angle);
 
-  if (angle > pi()/2) {
-    ++closestWaypoint;
+  if (angle > pi()/4) {
+    closestWaypoint++;
     if (closestWaypoint == maps_x.size()) {
       closestWaypoint = 0;
     }
@@ -117,7 +117,7 @@ vector<double> getFrenet(double x, double y, double theta,
 
   // calculate s value
   double frenet_s = 0;
-  for (int i = 0; i < prev_wp; ++i) {
+  for (int i = 0; i < prev_wp; i++) {
     frenet_s += distance(maps_x[i],maps_y[i],maps_x[i+1],maps_y[i+1]);
   }
 
@@ -133,7 +133,7 @@ vector<double> getXY(double s, double d, const vector<double> &maps_s,
   int prev_wp = -1;
 
   while (s > maps_s[prev_wp+1] && (prev_wp < (int)(maps_s.size()-1))) {
-    ++prev_wp;
+    prev_wp++;
   }
 
   int wp2 = (prev_wp+1)%maps_x.size();
