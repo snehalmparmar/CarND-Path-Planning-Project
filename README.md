@@ -4,8 +4,6 @@
 
 [![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
-![Path Planning](https://user-images.githubusercontent.com/4352286/44061856-0c255b1c-9f28-11e8-9b5a-0857b05d6da3.png)
-
 ![PathPlanningOutputVideo](https://github.com/snehalmparmar/CarND-Path-Planning-Project/blob/master/src/video_output/2019-12-28-21-33-56.gif)
 
 The goal of this project is to design a path planner that is able to create smooth, safe paths for the car to follow along a 3 lanes highway with traffic. A successful path planner will be able to keep inside its lane, avoid hitting other cars, and pass slower moving traffic all by using localization, sensor fusion, and map data.
